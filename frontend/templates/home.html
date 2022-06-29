@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block css%}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static',filename='styles/login.css') }}"
+/>
+{% endblock %}
+
+{% block navbar %}
+{{super()}}
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content%}
+{{super()}}
+
+
+{% endblock %}

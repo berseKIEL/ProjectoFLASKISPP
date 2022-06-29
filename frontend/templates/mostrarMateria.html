@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{super()}}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static',filename='styles/materias.css') }}"
+/>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content%}
+{{super()}}
+    {% from "macroMaterias.html" import show_anio_materia%}
+    {{ show_anio_materia("Primer Año", "1", row) }}
+    {{show_anio_materia("Segundo Año", "2", row)}}
+
+{% endblock %}

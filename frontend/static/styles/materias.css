@@ -1,0 +1,13 @@
+.materias {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+
+h1 {
+    color: aliceblue;
+    font-size: 2.5rem;
+    background-color: teal;
+}
