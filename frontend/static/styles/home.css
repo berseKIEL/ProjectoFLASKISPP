@@ -10,22 +10,9 @@ body {
     background-size: cover;
 }
 
-.header-pagina {
-    background-color: #1e73be;
-    text-align: center;
-    height: 2.5rem;
-}
-
 a {
     color: white;
     text-decoration: none;
     background-color: transparent;
 }
 
-.mycustom-jumbotron {
-    border: transparent;
-    width: 765px;
-    margin: 50px auto 20px;
-    display: block;
-    padding-bottom: 0.8%;
-  }

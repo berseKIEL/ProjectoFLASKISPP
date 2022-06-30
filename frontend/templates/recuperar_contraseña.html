@@ -3,6 +3,7 @@
 {% block titulo %}Recuperar Contraseña{% endblock %}
 
 {% block navbar%}
+{{super()}}
 {% endblock %}
 
 {% block content %}
@@ -19,7 +20,7 @@
                         <input type="email" class="form-control" name="email" id="email" placeholder="Ingresa tu email">
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar Mail</button>
-                    <a href="{{url_for('views.index')}}" class="btn btn-danger">Volver</a>
+                    <a href="{{url_for('auth.login')}}" class="btn btn-danger">Volver</a>
             </div>
     </div>
 </form>

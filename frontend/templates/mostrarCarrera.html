@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block navbar %}
+{{super()}}
 {% endblock %}
 
 {% block title %}
@@ -19,8 +20,6 @@ Home
 {% block content%}
 
 {{super()}}
-    {% from "macroEscolar.html" import show_anio_materia%}
-    {{ show_anio_materia("Primer Año", "1", row) }}
-    {{show_anio_materia("Segundo Año", "2", row)}}
-
+    {% from "macroEscolar.html" import show_carreras%}
+    {{show_carreras(row)}}
 {% endblock %}

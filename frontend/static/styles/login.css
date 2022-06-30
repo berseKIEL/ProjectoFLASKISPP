@@ -5,8 +5,7 @@ body {
   --color-secondary: rgb(3, 132, 183);
   --border-radius: 4px;
   font-family: 'Roboto Condensed', sans-serif;
-  font-size: 18px;
-  line-height: 0.8;
+
   background-color: var(--color-primary);
   background-size: cover;
 }
@@ -33,6 +32,7 @@ img {
 }
 
 .container {
+  line-height: 0.8;
   width: 360px;
   margin: auto;
   margin-top: 2.5rem;
