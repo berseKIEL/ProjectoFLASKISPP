@@ -20,6 +20,7 @@ Home
 {% block content%}
 
 {{super()}}
-    {% from "macroEscolar.html" import show_carreras%}
-    {{ show_carreras(row) }}
+    {% from "macroEscolar.html" import show_plan_carrera%}
+    {{show_plan_carrera(row)}}
+
 {% endblock %}
