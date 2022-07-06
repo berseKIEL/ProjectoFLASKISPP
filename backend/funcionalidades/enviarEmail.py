@@ -9,11 +9,16 @@ class email:
         self.emailcontraseña = 'xscvodrwfqutoswh'
         self.emailreceptor = emailreceptor
         self.asunto = 'Recuperar Contraseña'
-        self.cuerpo = 'contraseña temporal: '+p
+        self.cuerpo = '''
+        
+Se solicito un cambio de contraseña
+
+Su contraseña temporal es: '''+p+'''
+
+La contraseña es de un solo uso, cambia la contraseña luego de iniciar'''
 
     @classmethod
     def enviarCorreo(self, email):
-        print(email.emailemisor, email.emailreceptor, email.asunto, email.cuerpo)
         em = EmailMessage()
         em['From'] = email.emailemisor
         em['To'] = email.emailreceptor

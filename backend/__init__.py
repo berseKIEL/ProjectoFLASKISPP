@@ -5,7 +5,7 @@ from .models.ModeloUsuario import modeloUsuario
 from .models.entidad import EntidadUsuario
 
 # Importación Flask
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_mysqldb import MySQL
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect

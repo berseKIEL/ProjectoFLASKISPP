@@ -9,7 +9,7 @@ from ..funcionalidades.enviarEmail import email
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_wtf.csrf import CsrfProtect
+from flask_wtf.csrf import CSRFProtect
 
 # Desarrollo de la vista Login
 
@@ -68,8 +68,8 @@ def sign_up():
         else:
             modeloUsuario.crearUsuario(mysql, user)
             usuario_nuevo = modeloUsuario.filtrarUsuario(mysql, user)
-            login_user(usuario_nuevo)
-            return redirect(url_for('views.home'))
+            
+            return redirect(url_for('views.index'))
 
     return render_template("log_in.html", user=current_user)
 

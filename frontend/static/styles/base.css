@@ -28,4 +28,18 @@ a {
     margin: 50px auto 20px;
     display: block;
     padding-bottom: 0.8%;
-  }
+}
+
+.alert {
+    width: 450px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    left: 0;
+    margin: auto;
+    margin-top: 1rem;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    bottom: 2.5rem;
+    z-index: 1;
+}

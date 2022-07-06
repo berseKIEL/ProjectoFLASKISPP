@@ -38,16 +38,32 @@ order by CarreraNombre
 ''')
     cur.execute(consulta,([idcar]))
     row = cur.fetchall()
+    
     return render_template("mostrarPlanes.html", row=row)
 
 @vistAlumno.route("/carrera/<int:idcar>/plan/<int:idplan>/carpo/<int:idcarpo>/materias")
 @login_required
 def getMateriasCarreraPlanID(idcar, idplan, idcarpo):
+    carrera = request.args.get('carrera')
+    print(carrera)
+    
     cur = mysql.connection.cursor()
     consulta = ("SELECT * FROM materia where idcarpo = %s")
     cur.execute(consulta,([idcarpo]))
     row = cur.fetchall()
-    return render_template("mostrarMateria.html", row=row)
+
+    año=0
+    for mat in row:
+        for i in range(4):
+            if int(mat[3])>año:
+                año=int(mat[3])
+
+    años = [['Primer Año','1'],['Segundo Año','2'],['Tercer Año','3'],['Cuarto Año','4'],['Quinto Año','5']]
+    #cur.execute('SELECT carreraId FROM carpo WHERE carpoid = %s',([idcarpo]))
+    #carreraId = int(cur.fetchone()[0])
+    #cur.execute('SELECT año FROM carrera WHERE carreraid = %s',([carreraId]))
+    #año = int(cur.fetchone()[0])
+    return render_template("mostrarMateria.html", row=row, años = años, año = año, carrera=carrera)
 
 
 @vistAlumno.route("/mostrarCarrerasInscriptas")
@@ -67,51 +83,60 @@ def getCarrerasInscriptas():
     cur.execute(consulta,[(iduser)])
     iduser = cur.fetchone()[0]
 
-    #Tercero se pasa por el CarpoEstudiante
-    consulta = ("SELECT idCarpo, idCarpoEstudiante from CarpoEstudiante where idestudiante = %s")
-    cur.execute(consulta,[(iduser)])
-    auxiliar = cur.fetchone()
-    Carpo = auxiliar[0]
-    iduser = auxiliar[1]
-    
-    #Cuarto, se revisa que Carrera es
-    consulta = ('''SELECT DISTINCT
-CarreraNombre as 'Carrera',
-PlanNombre as 'Plan',
-IFNULL(OrientacionNombre,'Sin Orientación') as 'Orientación'
-FROM
-carpo
-left JOIN carrera on carpo.CarreraID = carrera.CarreraID
-left JOIN plandeestudio on carpo.PlanDeEstudioID = plandeestudio.PlanID
-left join orientacion on carpo.orientacionid = orientacion.orientacionid
-where carpoid = %s
-order by CarreraNombre;
-''')
-    cur.execute(consulta,[(Carpo)])
-    row = cur.fetchone()
-    
-    #Quinto, se revisa que Materias esta inscripto
-    consulta = ('select idmateria from carpestmateria where idcarpoestudiante = %s')
-    cur.execute(consulta, [(iduser)])
-    listaMateriasObtenidas = cur.fetchone()
-    return render_template("mostrarCarreraInscripta.html",rowcarpo=row, listamaterias=listaMateriasObtenidas)
+    # #Cuarto, se revisa que Carrera es
+    consulta = ('''SELECT DISTINCT CarreraNombre as 'Carrera', PlanNombre as 'Plan', 
+IFNULL(OrientacionNombre,'Sin Orientación') as 'Orientación', idCARPOEstudiante 
+FROM carpo left JOIN carrera on carpo.CarreraID = carrera.CarreraID 
+left JOIN plandeestudio on carpo.PlanDeEstudioID = plandeestudio.PlanID 
+left join orientacion on carpo.orientacionid = orientacion.orientacionid 
+inner join carpoestudiante on carpoestudiante.idcarpo = carpo.carpoid where carpoestudiante.idestudiante = %s order by CarreraNombre''')
+
+    cur.execute(consulta,[iduser])
+    row=cur.fetchall()
+    return render_template("mostrarCarreraInscripta.html",rowcarpo=row)
 
 
 
-@vistAlumno.route("/mostrarCarrerasInscriptas/<materias>/Materias")
+@vistAlumno.route("/mostrarCarrerasInscriptas/Materias")
 @login_required
-def getMateriasInscriptas(materias):
+def getMateriasInscriptas():
+    cur = mysql.connection.cursor()
+    idcarpos = request.args.get('idcarpo')
+    carrera = request.args.get('carrera')
+    
+    consulta = ('select idmateria from carpestmateria where idcarpoestudiante = %s')
+    cur.execute(consulta, [(idcarpos)])
+    materias = str(cur.fetchall()).replace('(','').replace(')','').replace(',','').split(' ')
     listaMaterias = []
-    materias = materias.replace('(','').replace(')','').replace('[','').replace(']','').replace(',','')
-    materias = materias.split(' ')
-    for materia in materias:
-        cur = mysql.connection.cursor()
-        consulta = ('SELECT nombremateria, tipo from materia where idmateria = %s')
-        cur.execute(consulta, [(str(materia))])
+    try:
+        for materia in materias:
+            cur = mysql.connection.cursor()
+            consulta = ('SELECT * from materia where idmateria = %s')
+            cur.execute(consulta, [(str(materia))])
+            row = cur.fetchone()
+            listaMaterias.append(row)
+        año=0
+        for mat in listaMaterias:
+            for i in range(4):
+                if int(mat[3])>año:
+                    año=int(mat[3])
+    except Exception as ex:
+        return render_template("mostrarMateriasInscriptas.html",materias=[],años=[], año=-1)
+
+    años = [['Primer Año','1'],['Segundo Año','2'],['Tercer Año','3'],['Cuarto Año','4'],['Quinto Año','5']]
+    return render_template("mostrarMateriasInscriptas.html",materias=listaMaterias,años=años, año=año,carrera=carrera)
+
+
+@vistAlumno.route("/inscripcionExamen", methods=['GET','POST'])
+@login_required
+def inscribirseExamen():
+    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        pass
+    if request.method == 'GET':
+        consulta = 'SELECT fecha_desde, fecha_hasta from calendario'
+        cur.execute(consulta)
         row = cur.fetchone()
-        materias.append(row)
-        listaMaterias.append(materias)
-    print(listaMaterias)
+        print(row)
     
-    
-    return render_template("mostrarMateriasInscriptas.html")
+    return render_template("inscripcionExamenes.html",user=current_user)
