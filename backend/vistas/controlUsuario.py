@@ -5,11 +5,8 @@ from ..models.ModeloUsuario import modeloUsuario
 from random import choice
 from ..funcionalidades.enviarEmail import email
 
-<<<<<<< HEAD
-=======
 import os 
 
->>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
 # Importación de Flask
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
@@ -17,14 +14,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_wtf.csrf import CSRFProtect
 
 # Desarrollo de la vista Login
-<<<<<<< HEAD
-
-auth = Blueprint('auth', __name__)
-=======
 template_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', '..', 'frontend', 'templates','login'))
 
 auth = Blueprint('auth', __name__,template_folder=template_dir)
->>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
 
 # Creación de la ruta login
 @auth.route('/login', methods=['GET', 'POST'])
@@ -34,10 +26,6 @@ def login():
         contrasenia = request.form.get('Lpassword')
         user = User(usuario=usuario, contraseña=contrasenia, email=usuario)
         RetornoUsuario = modeloUsuario.logearUsuario(mysql, user)
-<<<<<<< HEAD
-        print(RetornoUsuario)
-=======
->>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
         if RetornoUsuario != None:
             if RetornoUsuario.contraseña or RetornoUsuario.contraseñatemp:
                 cur = mysql.connection.cursor()
@@ -46,21 +34,14 @@ def login():
                 login_user(RetornoUsuario)
                 if RetornoUsuario.contraseñatemp:
                     return redirect(url_for('auth.cambiarcontraseña'))
-<<<<<<< HEAD
-=======
                 #control perfil
->>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
                 return redirect(url_for('views.home'))
             else:
                 flash('Contraseña Incorrecta', category='error')
         else:
             flash('Usuario Inexistente', category='error')
 
-<<<<<<< HEAD
-    return render_template("log_in.html", user=current_user)
-=======
     return render_template("log_in.html")
->>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
 
 @auth.route("/sign_up", methods=['GET', 'POST'])
 def sign_up():
@@ -130,11 +111,6 @@ def recuperarcontraseña():
                 return redirect(url_for('views.index'))
             else:
                 flash('El Email es Invalido')
-<<<<<<< HEAD
-        else:
-            print("calderon gay")
-=======
->>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
         return render_template('recuperar_contraseña.html')
     
 

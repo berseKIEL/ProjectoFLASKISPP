@@ -65,19 +65,13 @@ def create_app():
     from .vistas.controlUsuario import auth
     from .vistas.views import views
     from .vistas.alumno import vistAlumno
-<<<<<<< HEAD
-=======
     from .vistas.bedel import vistaBedel
->>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
     
     # Rgistración de Blueprints (vistas)
     app.register_blueprint(auth, url_prefix="/")
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(vistAlumno, url_prefix="/alumno")
-<<<<<<< HEAD
-=======
     app.register_blueprint(vistaBedel, url_prefix="/bedel")
->>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
     
     # Inicializar DataBase
     mysql.init_app(app)
