@@ -1,6 +1,5 @@
 # Importación de Modulos
 from .config import config
-from backend.funcionalidades import enviarEmail
 from .models.ModeloUsuario import modeloUsuario
 from .models.entidad import EntidadUsuario
 

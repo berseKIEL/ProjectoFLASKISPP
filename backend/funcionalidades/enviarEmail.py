@@ -2,11 +2,15 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 
-
 class email:
-    def __init__(self, emailreceptor, p) -> None:
-        self.emailemisor = 'preuebaspython@gmail.com'
-        self.emailcontraseña = 'xscvodrwfqutoswh'
+    def __init__(self, mysql, emailreceptor, p) -> None:
+        cur = mysql.connection.cursor()
+        consulta = ('SELECT * FROM mandarcorreo')
+        cur.execute(consulta)
+        row = cur.fetchone()
+        
+        self.emailemisor = row[1]
+        self.emailcontraseña = row[2]
         self.emailreceptor = emailreceptor
         self.asunto = 'Recuperar Contraseña'
         self.cuerpo = '''

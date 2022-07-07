@@ -103,7 +103,7 @@ def recuperarcontraseña():
                 flash('Error a la hora de enviar el email')
                 return redirect(url_for('auth.recuperarcontraseña'))
             
-            Email = email(mail, p)
+            Email = email(mysql, mail, p)
             Enviacion = email.enviarCorreo(Email)
             print(Enviacion)
             if Enviacion:
