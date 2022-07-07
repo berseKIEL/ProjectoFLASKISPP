@@ -1,5 +1,7 @@
 import os
 
+from ..funcionalidades import helperfecha
+
 from flask import Blueprint, render_template, flash, request
 from flask_login import login_required, current_user
 
@@ -134,13 +136,19 @@ def getMateriasInscriptas():
 @vistAlumno.route("/inscripcionExamen", methods=['GET','POST'])
 @login_required
 def inscribirseExamen():
+    añoActual = helperfecha.añoActual
+    añoSiguiente = helperfecha.añoSiguiente
+    
+    mesActual = helperfecha.mesActual
+    mesSiguiente = helperfecha.mesSiguiente
+    
     cur = mysql.connection.cursor()
     if request.method == 'POST':
         pass
     if request.method == 'GET':
-        consulta = 'SELECT fecha_desde, fecha_hasta from calendario'
-        cur.execute(consulta)
+        consulta = "SELECT fecha_desde, fecha_hasta from calendario where fecha_desde >= '%s-%s-01 00:00:00' and fecha_hasta < '%s-%s-01 00:00:00'"
+        cur.execute(consulta,(añoActual,mesActual,añoSiguiente, mesSiguiente))
         row = cur.fetchone()
         print(row)
     
-    return render_template("inscripcionExamenes.html",user=current_user)
+    return render_template("inscripcionExamenes.html")
