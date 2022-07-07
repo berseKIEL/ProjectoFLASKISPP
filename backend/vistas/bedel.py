@@ -5,6 +5,8 @@ from ..models.entidad.EntidadUsuario import User
 
 from .. import mysql
 
-vistaBedel = Blueprint("vistaBedel", __name__)
+template_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', '..', 'frontend', 'templates','bedel'))
+
+vistaBedel = Blueprint("vistaBedel", __name__,template_folder=template_dir+)
 
 #@bedel.route('/home')
