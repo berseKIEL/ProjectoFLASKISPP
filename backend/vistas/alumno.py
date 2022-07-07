@@ -137,7 +137,6 @@ def getMateriasInscriptas():
 @login_required
 def inscribirseExamen():
     añoActual = helperfecha.añoActual
-    añoSiguiente = helperfecha.añoSiguiente
     
     mesActual = helperfecha.mesActual
     mesSiguiente = helperfecha.mesSiguiente
@@ -146,9 +145,18 @@ def inscribirseExamen():
     if request.method == 'POST':
         pass
     if request.method == 'GET':
-        consulta = "SELECT fecha_desde, fecha_hasta from calendario where fecha_desde >= '%s-%s-01 00:00:00' and fecha_hasta < '%s-%s-01 00:00:00'"
-        cur.execute(consulta,(añoActual,mesActual,añoSiguiente, mesSiguiente))
-        row = cur.fetchone()
+        consulta = '''SELECT
+materia.nombremateria, materia.año,
+mesaexamenes.fechaExamen, mesaexamenes.modoexamen
+from mesaexamenes
+inner join materia on materia.idmateria = mesaexamenes.idmateria
+inner join calendario_has_mesaexamenes on calendario_has_mesaexamenes.mesaexamenes_idMesaExamenes = mesaexamenes.idmesaexamenes
+inner join calendario on calendario.idcalendario = calendario_has_mesaexamenes.calendario_idcalendario
+where calendario_has_mesaexamenes.vigenciaexamen = 1
+and calendario.fecha_desde >= '%s-%s-01 00:00:00' and calendario.fecha_hasta <= '%s-%s-01 00:00:00'
+'''
+        cur.execute(consulta,(añoActual,mesActual,añoActual, mesSiguiente))
+        row = cur.fetchall()
         print(row)
     
-    return render_template("inscripcionExamenes.html")
+    return render_template("inscripcionExamenes.html",rowExamenes = row)

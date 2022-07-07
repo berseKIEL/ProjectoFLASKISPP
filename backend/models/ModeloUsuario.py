@@ -79,7 +79,7 @@ class modeloUsuario():
             ema = str(row[0])
             id = int(row[1])
             if user.email == ema:
-                cur.execute('UPDATE usuarios SET contraseñatemp = %s WHERE idusuario = %s', (str(
+                cur.execute(' usuarios SET contraseñatemp = %s WHERE idusuario = %s', (str(
                     User.generarhash(user.contraseñatemp)), id))
                 mysql.connection.commit()    
                           

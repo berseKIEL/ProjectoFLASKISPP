@@ -20,4 +20,7 @@ Home
 {% block content%}
 {{super()}}
 
+{% from "macroEscolar.html" import mostrarExamenesDisponibles%}
+{{ mostrarExamenesDisponibles(rowExamenes) }}
+
 {% endblock %}

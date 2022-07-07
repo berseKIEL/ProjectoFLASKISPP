@@ -105,3 +105,34 @@
   </div>
 </div>
 {%endmacro%}
+
+
+{% macro mostrarExamenesDisponibles(rowExamenes)%}
+<br>
+<div class="container">
+  <div class="card">
+    <div class="card-header text-center align-items-center h-100 p-4">
+      <h1> Examenes disponibles </h1>
+      <div class="row">
+        {%for column in rowExamenes %}
+        <div class="col-6 col-sm-4 p-1">
+          <a
+            class="card-title"
+            href="#"
+          >
+            <div class="card d-flex flex-column">
+              <div class="card-body text-center">
+                <h5 class="card-title">Materia: {{column[0]}}</h5>
+                <h5 class="card-title">Fecha Examen: {{column[2]}}</h5>
+                <h5 class="card-title">Modalidad: {{column[3]}}</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%endmacro%}
