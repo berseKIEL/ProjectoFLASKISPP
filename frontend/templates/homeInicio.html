@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block css%}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static',filename='styles/home.css') }}"
+/>
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="https://ifspp1-sgo.infd.edu.ar/sitio/" rel="home"> I.S.P.P. N° 1 Prof. Rodolfo Argentino Díaz </a>
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+      <div class="navbar-nav mr-auto">
+        {% if current_user.is_authenticated %}
+        <a class="nav-item nav-link" href="/home">Inicio</a>
+        <a class="nav-item nav-link" href="{{url_for('vistAlumno.getCarreras')}}">Carreras</a>
+          {{idperfil}}
+          {% if current_user.idperfil == 3 %}
+            
+            <a class="nav-item nav-link" href="{{url_for('vistAlumno.getCarrerasInscriptas')}}">Carreras Inscriptas</a>
+            <a class="nav-item nav-link" href="{{url_for('vistAlumno.inscribirseExamen')}}">Inscripción a Examenes</a>
+          {% elif current_user.idperfil == 2 %}
+              <!-- Profesor -->
+              
+          {% elif current_user.idperfil == 1 %}
+              <!-- Bedel -->
+              <a class="nav-item nav-link" href="{{url_for('vistAlumno.getCarrerasInscriptas')}}">Cargar Carreras</a>
+              <a class="nav-item nav-link" href="{{url_for('vistAlumno.inscribirseExamen')}}">Inscripción a Examenes</a>
+          {% else %}
+            <h1> El usuario no presenta perfil </h1>
+
+          {% endif %}
+          <a class="nav-item nav-link" href="{{url_for('auth.logout')}}">Cerrar Sesión</a>
+
+        {% else %}
+        <a class="nav-item nav-link" href="/">Inicio</a>
+        <a class="nav-item nav-link" href="{{url_for('auth.login')}}">Iniciar Sesion</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content%}
+{{super()}}
+
+<div class="jumbotron  mycustom-jumbotron">
+  <h1 class="display-4">¡Bienvenido, {{current_user.usuario.upper()}}!</h1>
+  <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <hr class="my-4">
+  <p>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+</div>
+
+{% endblock %}

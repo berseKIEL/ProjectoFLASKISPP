@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import os
+
+>>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
 from flask import Blueprint, render_template, flash, request
 from flask_login import login_required, current_user
 
@@ -5,8 +10,15 @@ from ..models.entidad.EntidadUsuario import User
 
 from .. import mysql
 
+<<<<<<< HEAD
 vistAlumno = Blueprint("vistAlumno", __name__)
 
+=======
+#Template folder
+template_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', '..', 'frontend', 'templates','alumno'))
+
+vistAlumno = Blueprint("vistAlumno", __name__,template_folder=template_dir)
+>>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
 
 @vistAlumno.route("/carrera", methods=["GET", "POST"])
 @login_required

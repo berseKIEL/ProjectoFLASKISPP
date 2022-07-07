@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{super()}}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static',filename='styles/materias.css') }}"
+/>
+{% endblock %}
+
+{% block navbar %}
+{{super()}}
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content%}
+{{super()}}
+<br>
+{%if año == -1%}
+  <h1 align="center">No te inscribiste a ninguna materia</h1>
+{%endif%}
+
+{%for i in range(año)%}
+  <div class="container">
+    <div class="card h1Carrera">
+      <div class="card-header text-center align-items-center p-0">
+        <h1 class="h1Carrera card-title">{{carrera}}</h1>
+      </div>
+    </div>
+  </div>
+    {%if i != '0'%}
+        {% from "macroEscolar.html" import show_anio_materia%}
+        {{ show_anio_materia(años[i][0], años[i][1], materias) }}
+    {%endif%}
+{%endfor%}
+
+
+{{super()}}   
+
+
+{% endblock %}

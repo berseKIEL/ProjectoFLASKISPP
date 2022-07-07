@@ -7,7 +7,11 @@ class modeloUsuario():
     def filtrarUsuario(self, mysql, user):
         try:
             cur = mysql.connection.cursor()
+<<<<<<< HEAD
             consulta = ("SELECT * FROM usuarios WHERE usuario = %s")
+=======
+            consulta = ("select usuarios.idusuario, usuario, contraseña, email, contraseñatemp, idperfil from usuarios inner join usuariosperfiles on usuarios.idusuario = usuariosperfiles.idusuario where usuario = %s")
+>>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
             cur.execute(consulta, [str(user.usuario)])
             filtro = cur.fetchone()
             return filtro
@@ -19,7 +23,11 @@ class modeloUsuario():
     def filtrarEmail(self, mysql, user):
         try:
             cur = mysql.connection.cursor()
+<<<<<<< HEAD
             consulta = ("SELECT * FROM usuarios WHERE email = %s")
+=======
+            consulta = ("select usuarios.idusuario, usuario, contraseña, email, contraseñatemp, idperfil from usuarios inner join usuariosperfiles on usuarios.idusuario = usuariosperfiles.idusuario where email = %s")
+>>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
             cur.execute(consulta, [str(user.email)])
             filtro = cur.fetchone()
             return filtro
@@ -37,7 +45,11 @@ class modeloUsuario():
                     temp = User.checkpassword(temp, user.contraseña)
                 else:
                     temp = False
+<<<<<<< HEAD
                 user = User(row[0], row[1], User.checkpassword(row[2], user.contraseña), row[3], temp)
+=======
+                user = User(row[0], row[1], User.checkpassword(row[2], user.contraseña), row[3], temp, row[5])
+>>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
                 return user
             else:
                 row = modeloUsuario.filtrarEmail(mysql, user)
@@ -47,7 +59,11 @@ class modeloUsuario():
                         temp = User.checkpassword(temp, user.contraseña)
                     else:
                         temp = False
+<<<<<<< HEAD
                     user = User(row[0], row[1], User.checkpassword(row[2], user.contraseña), row[3], temp)
+=======
+                    user = User(row[0], row[1], User.checkpassword(row[2], user.contraseña), row[3], temp, row[5])
+>>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
                     return user
                 else:
                     return None
@@ -91,11 +107,19 @@ class modeloUsuario():
     def conseguirID(self, mysql, id):
         try:
             cur = mysql.connection.cursor()
+<<<<<<< HEAD
             sql = 'SELECT idusuario, usuario, email FROM usuarios WHERE idusuario = %s'
             cur.execute(sql, (id))
             row = cur.fetchone()
             if row != None:
                 return User(row[0], row[1], row[2], None)
+=======
+            sql = 'SELECT usuarios.idusuario, usuario, email, idperfil FROM usuarios inner join usuariosperfiles on usuarios.idusuario = usuariosperfiles.idusuario WHERE usuarios.idusuario = %s'
+            cur.execute(sql, (id))
+            row = cur.fetchone()
+            if row != None:
+                return User(row[0], row[1],None, row[2], None, row[3])
+>>>>>>> 7f87bf5 (Merge branch 'master' of https://github.com/berseKIEL/ProjectoFLASKISPP)
             else:
                 return None
 
