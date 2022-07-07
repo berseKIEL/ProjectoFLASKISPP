@@ -145,9 +145,14 @@ def inscribirseExamen():
     if request.method == 'POST':
         pass
     if request.method == 'GET':
+        consulta = ('SELECT idusuarioperfil from usuariosperfiles where idusuario = %s')
+        cur.execute(consulta,[str(current_user.id)])
+        idusuarioperfil = cur.fetchone()[0]        
+        
         consulta = '''SELECT
 materia.nombremateria, materia.año,
-mesaexamenes.fechaExamen, mesaexamenes.modoexamen
+mesaexamenes.fechaExamen, mesaexamenes.modoexamen,
+carpestmateria.condicion
 from mesaexamenes
 inner join calendario on calendario.idcalendario = mesaexamenes.idcalendario
 inner join materia on materia.idmateria = mesaexamenes.idmateria
@@ -155,10 +160,10 @@ inner join inscripcionexamencarpestmat on inscripcionexamencarpestmat.idMesaExam
 inner join carpestmateria on carpestmateria.idmateria = materia.idmateria
 inner join carpoestudiante on carpestmateria.idcarpoestudiante = carpoestudiante.idcarpoestudiante
 inner join estudiante on estudiante.idestudiante = carpoestudiante.idestudiante
-where estudiante.idusuariosperfiles = %s and calendario.calendariovigencia = 1
-and (carpestmateria.condicion = 'Regular' or carpestmateria.condicion = 'Libre')
+where estudiante.idusuariosperfiles = %s and calendario.calendariovigencia = 1 and
+(carpestmateria.condicion = 'Regular' or carpestmateria.condicion = 'Libre')
 '''
-        cur.execute(consulta,str((current_user.idperfil)))
+        cur.execute(consulta,([str(idusuarioperfil)]))
         row = cur.fetchall()
         print(row)
     
