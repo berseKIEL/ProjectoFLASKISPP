@@ -149,13 +149,16 @@ def inscribirseExamen():
 materia.nombremateria, materia.año,
 mesaexamenes.fechaExamen, mesaexamenes.modoexamen
 from mesaexamenes
+inner join calendario on calendario.idcalendario = mesaexamenes.idcalendario
 inner join materia on materia.idmateria = mesaexamenes.idmateria
-inner join calendario_has_mesaexamenes on calendario_has_mesaexamenes.mesaexamenes_idMesaExamenes = mesaexamenes.idmesaexamenes
-inner join calendario on calendario.idcalendario = calendario_has_mesaexamenes.calendario_idcalendario
-where calendario_has_mesaexamenes.vigenciaexamen = 1
-and calendario.fecha_desde >= '%s-%s-01 00:00:00' and calendario.fecha_hasta <= '%s-%s-01 00:00:00'
+inner join inscripcionexamencarpestmat on inscripcionexamencarpestmat.idMesaExamenes = mesaexamenes.idMesaExamenes
+inner join carpestmateria on carpestmateria.idmateria = materia.idmateria
+inner join carpoestudiante on carpestmateria.idcarpoestudiante = carpoestudiante.idcarpoestudiante
+inner join estudiante on estudiante.idestudiante = carpoestudiante.idestudiante
+where estudiante.idusuariosperfiles = %s and calendario.calendariovigencia = 1
+and (carpestmateria.condicion = 'Regular' or carpestmateria.condicion = 'Libre')
 '''
-        cur.execute(consulta,(añoActual,mesActual,añoActual, mesSiguiente))
+        cur.execute(consulta,str((current_user.idperfil)))
         row = cur.fetchall()
         print(row)
     
