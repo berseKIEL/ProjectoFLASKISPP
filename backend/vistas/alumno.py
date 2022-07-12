@@ -96,7 +96,6 @@ FROM carpo left JOIN carrera on carpo.CarreraID = carrera.CarreraID
 left JOIN plandeestudio on carpo.PlanDeEstudioID = plandeestudio.PlanID 
 left join orientacion on carpo.orientacionid = orientacion.orientacionid 
 inner join carpoestudiante on carpoestudiante.idcarpo = carpo.carpoid where carpoestudiante.idestudiante = %s order by CarreraNombre''')
-
     cur.execute(consulta,[iduser])
     row=cur.fetchall()
     return render_template("mostrarCarreraInscripta.html",rowcarpo=row)
