@@ -8,7 +8,7 @@ class configuracionDesarrollo(Config):
     MYSQL_USER = 'root'
     MYSQL_PASSWORD = 'root'
     MYSQL_DB = 'isppf'
-    MYSQL_PORT = 3308
+    MYSQL_PORT = 3306
 
 
 config = {

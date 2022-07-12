@@ -85,7 +85,7 @@ def getCarrerasInscriptas():
     iduser = cur.fetchone()[0]
 
     #Segundo se pasa por el Estudiante
-    consulta = ("SELECT idestudiante from estudiante where IDusuariosPerfiles = %s")
+    consulta = ("SELECT idestudiante from estudiante where idestudiante = %s")
     cur.execute(consulta,[(iduser)])
     iduser = cur.fetchone()[0]
 
@@ -160,7 +160,7 @@ inner join inscripcionexamencarpestmat on inscripcionexamencarpestmat.idMesaExam
 inner join carpestmateria on carpestmateria.idmateria = materia.idmateria
 inner join carpoestudiante on carpestmateria.idcarpoestudiante = carpoestudiante.idcarpoestudiante
 inner join estudiante on estudiante.idestudiante = carpoestudiante.idestudiante
-where estudiante.idusuariosperfiles = %s and calendario.calendariovigencia = 1 and
+where estudiante.idestudiante = %s and calendario.calendariovigencia = 1 and
 (carpestmateria.condicion = 'Regular' or carpestmateria.condicion = 'Libre')
 '''
         cur.execute(consulta,([str(idusuarioperfil)]))
